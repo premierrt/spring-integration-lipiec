@@ -1,0 +1,3 @@
+http://www.javarticles.com/2015/05/spring-integration-hello-world-example.html
+
+https://springframework.guru/hello-world-using-spring-integration/
