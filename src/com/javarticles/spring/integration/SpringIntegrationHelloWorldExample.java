@@ -1,5 +1,8 @@
 package com.javarticles.spring.integration;
  
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
@@ -16,8 +19,28 @@ public class SpringIntegrationHelloWorldExample {
         /**
          * gateway laczy interface wywolywane z kanelem. 
          */
-        Greeting greetingGateway= (Greeting)context.getBean("greetingGateway");
-        		System.out.println(greetingGateway.sayHello("World"));
+        GreetingGateway greetingGateway= (GreetingGateway)context.getBean("greetingGateway");
+        Future< String> greetingFuture = greetingGateway.sayHello("World");
+        		
+        String greetingText;
+		try {
+			greetingText = greetingFuture.get();
+	        System.out.println(greetingText);
+
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        		
+        		
+        System.out.println("Synchroniczna metoda zwrocia cos");
+        
+        System.out.println("Test metody ktora nic nie zwraca");
+        greetingGateway.sayHelloNoReturn("dupa ");
+        System.out.println("Koniec programu glownego. Test metody ktora nic nie zwraca");
+
+        
         
     }
  

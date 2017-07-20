@@ -12,14 +12,22 @@
     </int:channel>
  
    
-     
+     <!-- implementacja serwisu dla serviceActivator -->
     <bean id="greetingService" class="com.javarticles.spring.integration.GreetingImpl"/>
      
-
-	<int:service-activator input-channel="inputChannel" ref="greetingService" method="sayHello"></int:service-activator>
+	<!-- service activator pooluje z inputchannela do ktorego strzela gateway.  -->
+	<int:service-activator id="sayHello" input-channel="inputChannel" ref="greetingService" method="sayHello"></int:service-activator>
     
+    
+    <!-- drugi service activator do obslugi kanału dla metody sayHelloNoReturn. service activator pooluje z inputchannela do ktorego strzela gateway.  -->
+	<int:service-activator id="sayHelloNoReturn" input-channel="inputChannel" ref="greetingService" method="sayHelloNoReturn"></int:service-activator>
+    
+    
+    <!-- gateway wie tylko ze strzela do input channela, a nie do konkretnego service activatora -->
     <int:gateway id="greetingGateway"
-    	service-interface="com.javarticles.spring.integration.Greeting"
+    	service-interface="com.javarticles.spring.integration.GreetingGateway"
     	default-request-channel="inputChannel"
     />
+    
+    
 </beans>
