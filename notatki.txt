@@ -1,3 +1,43 @@
 http://www.javarticles.com/2015/05/spring-integration-hello-world-example.html
 
 https://springframework.guru/hello-world-using-spring-integration/
+
+--dodac kolejka asynchroniczna
+--dodac publish subsribe
+--dodac excutora
+
+
+
+<beans xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:int-ws="http://www.springframework.org/schema/integration/ws"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+                  http://www.springframework.org/schema/integration/ws http://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+  <alias name="asynchronousMsisdnGateway" alias="asynchMsisdnGateway"/>
+  <int:gateway id="asynchronousMsisdnGateway" service-interface="pl.play.services.msisdn.AsynchronousMsisdnGateway" error-channel="msisdnAsynchErrorChannel">
+    <int:method name="getDefaultMsisdn" request-channel="getAsynchFreeMsisdnsRequestChannel" reply-channel="getAsynchFreeMsisdnsResponseChannel" />
+  </int:gateway>
+
+  <int:publish-subscribe-channel id="msisdnAsynchErrorChannel" />
+  <int:publish-subscribe-channel id="getAsynchFreeMsisdnsRequestChannel" task-executor="executor"/>
+  <int:publish-subscribe-channel id="getAsynchFreeMsisdnsResponseChannel"/>
+
+  <int:transformer ref="transformer" method="transform" input-channel="getAsynchFreeMsisdnsRequestChannel" output-channel="getAsynchFreeMsisdnsResponseChannel"/>
+
+  <task:executor id="executor" pool-size="10"/>
+
+  <task:executor id="errorTaskExecutor" pool-size="10"/>
+
+  <int:service-activator input-channel="msisdnAsynchErrorChannel" ref="msisdnAsynchErrorHandler"/>
+
+  <bean name="msisdnAsynchErrorHandler" class="pl.play.integration.msisdn.MsisdnErrorHandler"/>
+
+  <bean id="transformer" class="pl.play.services.msisdn.impl.AsynchMsisdnTransform">
+    <property name="msisdnGateway" ref="msisdnGateway" />
+  </bean>
+</beans>
