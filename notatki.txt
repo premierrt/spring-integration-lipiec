@@ -5,6 +5,8 @@ https://springframework.guru/hello-world-using-spring-integration/
 --dodac kolejka asynchroniczna
 --dodac publish subsribe
 --dodac excutora
+--dodac webservice klient int-ws:outbound-gateway
+https://www.javacodegeeks.com/2015/09/spring-integration-and-web-services.html
 
 
 
