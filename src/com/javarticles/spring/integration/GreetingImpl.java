@@ -18,14 +18,14 @@ public class GreetingImpl implements Greeting {
 
 	@Override
 	public void sayHelloNoReturn(String payload) {
-		  System.out.println(payload + "Service  nic nie zwroci, ale program glowny i tak czeka na zakonczenie...");
+		  System.out.println(payload + "start service...");
 		  try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(); 
 		} 
-		  System.out.println("Service  nic nie zwroci zakonczyl sie ...");
+		  System.out.println(payload + "   " + "Koniec Service  nic nie zwroci zakonczyl sie ...");
 
 		
 	}
