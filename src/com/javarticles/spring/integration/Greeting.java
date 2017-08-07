@@ -6,5 +6,8 @@ public interface Greeting{
 	public String sayHello(String payload);
 	
 	public void sayHelloNoReturn(String payload);
+	
+	//do testow publish subscriber
+	public void sendGreeting(String message);
 
 }
