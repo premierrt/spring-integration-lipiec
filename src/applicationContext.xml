@@ -19,7 +19,7 @@
  
    
      <!-- implementacja serwisu dla serviceActivator -->
-    <bean id="greetingService" class="com.javarticles.spring.integration.GreetingImpl"/>
+    <bean id="greetingService" class="com.javarticles.spring.integration.serviceactivator.GreetingImpl"/>
      
 	<!-- service activator pooluje z inputchannela do ktorego strzela gateway.  -->
 	<int:service-activator id="sayHello" input-channel="inputChannel" ref="greetingService" method="sayHello"></int:service-activator>

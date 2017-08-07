@@ -1,4 +1,4 @@
-package com.javarticles.spring.integration;
+package com.javarticles.spring.integration.serviceactivator;
 
 import java.util.concurrent.Future;
 
