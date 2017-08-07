@@ -19,6 +19,46 @@ public class SpringIntegrationHelloWorldExample {
         
     }
  
+    
+    
+    
+    public static void testWersjaPublishSubsribeSpringIntegration(){
+    	
+    	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+                "applicationContext.xml");
+
+        /**
+         * gateway laczy interface wywolywane z kanelem. 
+         */
+        GreetingGateway greetingGateway= (GreetingGateway)context.getBean("greetingGateway");
+//        Future< String> greetingFuture = greetingGateway.sayHello("World");
+//        		
+//        String greetingText;
+//		try {
+//			greetingText = greetingFuture.get();
+//	        System.out.println(greetingText);
+//
+//		} catch (InterruptedException | ExecutionException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+        
+        		
+        		
+        
+        System.out.println("Test metody ktora nic nie zwraca");
+       for (int i=0; i<5; i++){
+        	greetingGateway.sayHelloNoReturn("to jest wywolanie numer: "+i);
+        }
+        System.out.println("Koniec programu glownego. Test metody ktora nic nie zwraca");
+   }
+   
+    
+    
+    
+    
+    
+    
 
     public static void testWersjBasicSpringIntegration(){
     	
