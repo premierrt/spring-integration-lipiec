@@ -3,10 +3,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:int="http://www.springframework.org/schema/integration"
     	xmlns:task="http://www.springframework.org/schema/task"
+    	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+    	
     
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
         		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+        		http://www.springframework.org/schema/integration/stream http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd
         
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
  
@@ -64,6 +67,19 @@
     	default-request-channel="asyncInputChannel"
     />
    
+   
+   
+   
+   <!-- publish subscriber -->
+    <int:publish-subscribe-channel id="publishSubscriberChannel"/>
+    
+    <!-- gateway -->
+    <int:gateway service-interface="com.javarticles.spring.integration.GreetingGateway" default-request-channel="publishSubscriberChannel"></int:gateway>
+   
+    
+    <int-stream:stderr-channel-adapter channel="messagesChannel" append-newline="true"/>
+ <int-stream:stdout-channel-adapter channel="messagesChannel" append-newline="true"/>
+    
     
     
 </beans>
