@@ -1,9 +1,12 @@
 to do:
 
---dodac publish subsribe
++ok--dodac publish subsribe
 https://www.javacodegeeks.com/2012/07/spring-integration-session-2-more-hello.html
---dodac junit
+
++ok--dodac junit
 https://www.javacodegeeks.com/2012/07/spring-integration-session-2-more-hello.html
+
+-jak dzial executor i pulowanie w publis subsribe
 
 --tag dla wersji synchro zrobic
 --Adapter File 
@@ -68,6 +71,31 @@ to jest wywolanie numer: 3   Koniec Service  nic nie zwroci zakonczyl sie ...
 to jest wywolanie numer: 4start service...
 to jest wywolanie numer: 4   Koniec Service  nic nie zwroci zakonczyl sie ...
 
+
+3. publish subsriber po dodanie executora nie blokuje procesu. wysyla i nie czeka na odpowiedz.
+W przypadku junit po uruchomieniu 10x wyslania przez gateway metoda sie konczy i junit niszczy wszystko, lacznie z watkami ktore œpi przez 3 sek w service activator.
+public void testSendGreeting(){
+		for (int i=0; i< 10; i++){ 
+			greetingGateway.sendGreeting("to jest testowy tekst");
+		}
+		System.out.println("koniec testow");
+	}
+
+
+sie 07, 2017 5:09:45 PM org.springframework.integration.endpoint.PollingConsumer start
+INFO: started sayHelloNoReturnAsync
+koniec testow
+to jest testowy tekststart service activator...
+to jest testowy tekststart service activator...
+to jest testowy tekststart service activator...
+to jest testowy tekststart service activator...
+sie 07, 2017 5:09:45 PM org.springframework.context.support.GenericApplicationContext doClose
+INFO: Closing org.springframework.context.support.GenericApplicationContext@380fb434: startup date [Mon Aug 07 17:09:44 CEST 2017]; root of context hierarchy
+sie 07, 2017 5:09:45 PM org.springframework.context.support.DefaultLifecycleProcessor stop
+INFO: Stopping beans in phase 1073741823
+java.lang.InterruptedException: sleep interrupted
+	at java.lang.Thread.sleep(Native Method)
+	at com.javarticles.spring.integration.servicea
 
 
 <beans xmlns:int="http://www.springframework.org/schema/integration"

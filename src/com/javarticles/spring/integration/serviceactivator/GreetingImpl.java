@@ -18,7 +18,7 @@ public class GreetingImpl implements Greeting {
 
 	@Override
 	public void sayHelloNoReturn(String payload) {
-		  System.out.println(payload + "start service...");
+		  System.out.println(payload + "start service activator...");
 		  try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
